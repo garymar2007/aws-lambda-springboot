@@ -26,8 +26,11 @@ public class CourseService {
     }
 
     public boolean updateCourse(int id, Course course) {
-        Optional<Course> existingCourse = getCourseById(id);
-        return existingCourse.map(value -> updateCourse(id, course)).orElse(false);
+        return getCourseById(id).map(existingCourse -> {
+            existingCourse.setName(course.getName());
+            existingCourse.setPrice(course.getPrice());
+            return true;
+        }).orElse(false);
     }
 
     public boolean deleteCourse(int id) {
